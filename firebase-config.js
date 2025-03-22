@@ -1,7 +1,6 @@
 /* 
  * Archivo: firebase-config.js
  * Descripción: Configuración e inicialización de Firebase.
- * Nota: Asegúrate de tener instalada la versión 9.6.1 o superior de Firebase.
  */
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
 import { getAuth } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
