@@ -29,7 +29,6 @@
   <footer>
     <p>&copy; 2025 Sistema de Administración para Residencias.</p>
   </footer>
-  <!-- Script para el inicio de sesión -->
   <script type="module">
     import { auth } from './firebase-config.js';
     import { signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
@@ -41,13 +40,16 @@
       const email = document.getElementById('email').value;
       const password = document.getElementById('password').value;
 
+      console.log("Intentando iniciar sesión con:", email);
+
       try {
-        await signInWithEmailAndPassword(auth, email, password);
+        const userCredential = await signInWithEmailAndPassword(auth, email, password);
+        console.log("Usuario autenticado:", userCredential.user);
         alert("Inicio de sesión exitoso. Serás redirigido a tu Dashboard.");
         window.location.href = "dashboard.html";
       } catch (error) {
-        alert("Error en el inicio de sesión: " + error.message);
         console.error("Error en el inicio de sesión:", error);
+        alert("Error en el inicio de sesión: " + error.message);
       }
     });
   </script>
