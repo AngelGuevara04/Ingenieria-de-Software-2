@@ -18,19 +18,18 @@
   <main>
     <section>
       <h2>Bienvenido, <span id="user-name">Usuario</span></h2>
-      <p>Aquí encontrarás la información general y las opciones para administrar las residencias.</p>
+      <p>Aquí encontrarás información general y opciones para administrar las residencias.</p>
     </section>
-    <!-- Se pueden agregar módulos o secciones adicionales según sea necesario -->
+    <!-- Se pueden agregar módulos adicionales según se necesite -->
   </main>
   <footer>
     <p>&copy; 2025 Sistema de Administración para Residencias.</p>
   </footer>
-  <!-- Script para obtener información del usuario y cerrar sesión -->
   <script type="module">
     import { auth } from './firebase-config.js';
     import { signOut } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
 
-    // Mostrar el nombre del usuario en el Dashboard (si se configuró en el registro)
+    // Mostrar el nombre del usuario en el Dashboard (si está disponible)
     const userNameSpan = document.getElementById('user-name');
     if (auth.currentUser && auth.currentUser.displayName) {
       userNameSpan.textContent = auth.currentUser.displayName;
@@ -38,7 +37,7 @@
       userNameSpan.textContent = "Usuario";
     }
 
-    // Cerrar sesión
+    // Manejar el cierre de sesión
     const logoutBtn = document.getElementById('logout-btn');
     logoutBtn.addEventListener('click', async (e) => {
       e.preventDefault();
@@ -47,8 +46,8 @@
         alert("Sesión cerrada correctamente.");
         window.location.href = "index.html";
       } catch (error) {
-        alert("Error al cerrar sesión: " + error.message);
         console.error("Error al cerrar sesión:", error);
+        alert("Error al cerrar sesión: " + error.message);
       }
     });
   </script>
