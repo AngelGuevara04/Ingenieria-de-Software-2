@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard - Sistema de Administración para Residencias</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header>
+    <img src="logo.jpg" alt="Logo del Proyecto">
+    <h1>Dashboard</h1>
+    <nav>
+      <a href="index.html">Inicio</a>
+      <a href="#" id="logout-btn">Cerrar Sesión</a>
+    </nav>
+  </header>
+  <main>
+    <section>
+      <h2>Bienvenido, <span id="user-name">Usuario</span></h2>
+      <p>Aquí encontrarás la información general y las opciones para administrar las residencias.</p>
+    </section>
+    <!-- Se pueden agregar módulos o secciones adicionales según sea necesario -->
+  </main>
+  <footer>
+    <p>&copy; 2025 Sistema de Administración para Residencias.</p>
+  </footer>
+  <!-- Script para obtener información del usuario y cerrar sesión -->
+  <script type="module">
+    import { auth } from './js/firebase-config.js';
+    import { signOut } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
+
+    // Mostrar el nombre del usuario en el Dashboard (si se configuró en el registro)
+    const userNameSpan = document.getElementById('user-name');
+    if (auth.currentUser && auth.currentUser.displayName) {
+      userNameSpan.textContent = auth.currentUser.displayName;
+    } else {
+      userNameSpan.textContent = "Usuario";
+    }
+
+    // Cerrar sesión
+    const logoutBtn = document.getElementById('logout-btn');
+    logoutBtn.addEventListener('click', async (e) => {
+      e.preventDefault();
+      try {
+        await signOut(auth);
+        alert("Sesión cerrada correctamente.");
+        window.location.href = "index.html";
+      } catch (error) {
+        alert("Error al cerrar sesión: " + error.message);
+        console.error("Error al cerrar sesión:", error);
+      }
+    });
+  </script>
+</body>
+</html>
