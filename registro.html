@@ -32,7 +32,6 @@
   <footer>
     <p>&copy; 2025 Sistema de Administración para Residencias.</p>
   </footer>
-  <!-- Script para el registro -->
   <script type="module">
     import { auth } from './firebase-config.js';
     import { createUserWithEmailAndPassword, updateProfile } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
@@ -45,15 +44,18 @@
       const email = document.getElementById('email').value;
       const password = document.getElementById('password').value;
 
+      console.log("Intentando registrar usuario:", email);
+
       try {
         const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-        // Actualizar el perfil del usuario con el nombre proporcionado
+        console.log("Usuario registrado:", userCredential.user);
+        // Actualizar el perfil del usuario con el nombre
         await updateProfile(auth.currentUser, { displayName: nombre });
         alert("Registro exitoso. Serás redirigido a la página de inicio de sesión.");
         window.location.href = "login.html";
       } catch (error) {
-        alert("Error en el registro: " + error.message);
         console.error("Error en el registro:", error);
+        alert("Error en el registro: " + error.message);
       }
     });
   </script>
