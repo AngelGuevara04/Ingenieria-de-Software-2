@@ -3,14 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dashboard Docente</title>
+  <title>Tablón - Docente</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <header>
-    <img src="logo.jpg" alt="Logo de la Academia">
+    <img src="logo.jpg" alt="Logo del Proyecto">
     <h1>Panel del Docente</h1>
-    <!-- Botón para cerrar sesión -->
     <button id="logout-button">Cerrar Sesión</button>
   </header>
 
@@ -57,12 +56,26 @@
   </section>
 
   <footer>
-    <p>&copy; 2025 Sistema de Administración para la Academia.</p>
+    <p>&copy; 2025 Sistema de Administración para Residencias.</p>
   </footer>
 
-  <!-- Script de Firebase -->
-  <script src="firebase-config.js"></script>
-  <!-- Script de funcionalidad del Dashboard -->
-  <script src="script.js"></script>
+  <script type="module">
+    import { auth } from './firebase-config.js';
+    import { signOut } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
+
+    const logoutButton = document.getElementById('logout-button');
+
+    // Función para cerrar sesión
+    logoutButton.addEventListener('click', async () => {
+      try {
+        await signOut(auth);
+        alert('Sesión cerrada exitosamente');
+        window.location.href = 'index.html';  // Redirige a la página de login
+      } catch (error) {
+        console.error('Error al cerrar sesión:', error);
+        alert('Hubo un error al cerrar sesión: ' + error.message);
+      }
+    });
+  </script>
 </body>
 </html>
