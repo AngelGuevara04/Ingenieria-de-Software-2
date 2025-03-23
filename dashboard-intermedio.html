@@ -1,68 +1,21 @@
+<!-- dashboard-intermedio.html -->
 <!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dashboard Intermedio - Sistema de Administración</title>
+  <title>Dashboard Intermedio</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <header>
-    <img src="logo.jpg" alt="Logo del Proyecto">
-    <h1>Bienvenido al Sistema de Administración</h1>
+    <h1>Bienvenido al dashboard intermedio</h1>
   </header>
-
   <main>
-    <section>
-      <h2>Redirigiendo...</h2>
-      <p>Estamos verificando tu rol y redirigiéndote al dashboard correspondiente...</p>
-    </section>
+    <p>Selecciona tu siguiente paso.</p>
+    <button onclick="window.location.href='dashboard-alumno.html'">Ir al Dashboard de Alumno</button>
+    <button onclick="window.location.href='dashboard-docente.html'">Ir al Dashboard de Docente</button>
+    <button onclick="window.location.href='dashboard-ejecutivo.html'">Ir al Dashboard de Ejecutivo</button>
   </main>
-
-  <footer>
-    <p>&copy; 2025 Sistema de Administración para Residencias.</p>
-  </footer>
-
-  <script type="module">
-    import { auth } from './firebase-config.js';
-    import { doc, getDoc } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
-    import { db } from './firebase-config.js';
-
-    // Verificar si el usuario está autenticado
-    const user = auth.currentUser;
-
-    if (user) {
-      // Obtenemos el tipo de usuario almacenado en Firestore
-      const userDocRef = doc(db, "usuarios", user.uid);
-      getDoc(userDocRef).then((docSnap) => {
-        if (docSnap.exists()) {
-          const userData = docSnap.data();
-          const userType = userData.tipoUsuario;
-
-          // Redirigir según el tipo de usuario
-          if (userType === "alumno") {
-            window.location.href = "dashboard-alumno.html";
-          } else if (userType === "docente") {
-            window.location.href = "dashboard-docente.html";
-          } else if (userType === "ejecutivo") {
-            window.location.href = "dashboard-ejecutivo.html";
-          } else {
-            alert("Tipo de usuario no reconocido.");
-            window.location.href = "login.html";
-          }
-        } else {
-          alert("No se pudo encontrar información del usuario.");
-          window.location.href = "login.html";
-        }
-      }).catch((error) => {
-        console.error("Error al obtener los datos del usuario:", error);
-        alert("Error al verificar el usuario.");
-        window.location.href = "login.html";
-      });
-    } else {
-      alert("No estás autenticado.");
-      window.location.href = "login.html";
-    }
-  </script>
 </body>
 </html>
