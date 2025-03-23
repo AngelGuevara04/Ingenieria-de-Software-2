@@ -1,7 +1,5 @@
-/* 
- * Archivo: firebase-config.js
- * Descripción: Configuración e inicialización de Firebase.
- */
+// firebase-config.js
+
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
 import { getAuth } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
 import { getFirestore } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
