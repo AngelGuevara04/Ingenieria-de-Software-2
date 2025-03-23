@@ -3,48 +3,48 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dashboard - Sistema de Administración para Residencias</title>
+  <title>Dashboard Alumno - Sistema de Administración para Residencias</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <header>
     <img src="logo.jpg" alt="Logo del Proyecto">
-    <h1>Dashboard</h1>
+    <h1>Bienvenido Alumno</h1>
     <nav>
       <a href="index.html">Inicio</a>
+      <a href="dashboard.html">Dashboard</a>
       <a href="#" id="logout-btn">Cerrar Sesión</a>
     </nav>
   </header>
   <main>
     <section>
-      <h2>Bienvenido, <span id="user-name">Usuario</span></h2>
-      <p>Aquí encontrarás información general y opciones para administrar las residencias.</p>
+      <h2>Bienvenido, <span id="user-name">Alumno</span></h2>
+      <p>Accede a tus materiales, tareas y actividades.</p>
     </section>
-    <!-- Se pueden agregar módulos adicionales según se necesite -->
   </main>
   <footer>
     <p>&copy; 2025 Sistema de Administración para Residencias.</p>
   </footer>
+
   <script type="module">
     import { auth } from './firebase-config.js';
     import { signOut } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
 
-    // Mostrar el nombre del usuario en el Dashboard (si está disponible)
     const userNameSpan = document.getElementById('user-name');
-    if (auth.currentUser && auth.currentUser.displayName) {
-      userNameSpan.textContent = auth.currentUser.displayName;
+    const logoutBtn = document.getElementById('logout-btn');
+
+    if (auth.currentUser) {
+      userNameSpan.textContent = auth.currentUser.displayName || "Alumno";
     } else {
-      userNameSpan.textContent = "Usuario";
+      window.location.href = "login.html";
     }
 
-    // Manejar el cierre de sesión
-    const logoutBtn = document.getElementById('logout-btn');
     logoutBtn.addEventListener('click', async (e) => {
       e.preventDefault();
       try {
         await signOut(auth);
         alert("Sesión cerrada correctamente.");
-        window.location.href = "index.html";
+        window.location.href = "login.html";
       } catch (error) {
         console.error("Error al cerrar sesión:", error);
         alert("Error al cerrar sesión: " + error.message);
