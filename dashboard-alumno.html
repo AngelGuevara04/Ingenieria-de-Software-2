@@ -3,19 +3,19 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dashboard - Alumno</title>
+  <title>Tablón - Alumno</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <header>
     <img src="logo.jpg" alt="Logo del Proyecto">
-    <h1>Bienvenido al Dashboard de Alumno</h1>
+    <h1>Bienvenido al tablón de alumno</h1>
     <button id="logout-button">Cerrar Sesión</button>
   </header>
 
   <main>
     <h2>Contenido exclusivo para alumnos</h2>
-    <p>Aquí aparecerá la información y las funcionalidades para los alumnos.</p>
+    <p>Aquí aparecerá la información y las funcionalidades para los alumnos</p>
   </main>
 
   <footer>
@@ -33,7 +33,7 @@
       try {
         await signOut(auth);
         alert('Sesión cerrada exitosamente');
-        window.location.href = 'login.html';  // Redirige a la página de login
+        window.location.href = 'index.html';  // Redirige a la página de login
       } catch (error) {
         console.error('Error al cerrar sesión:', error);
         alert('Hubo un error al cerrar sesión: ' + error.message);
