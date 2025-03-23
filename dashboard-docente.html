@@ -3,42 +3,73 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dashboard - Docente</title>
+  <title>Dashboard Docente</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+  <!-- Encabezado -->
   <header>
-    <img src="logo.jpg" alt="Logo del Proyecto">
-    <h1>Bienvenido al Dashboard de Docente</h1>
-    <button id="logout-button">Cerrar Sesión</button>
+    <img src="logo.png" alt="Logo de la Academia">
+    <h1>Panel del Docente</h1>
   </header>
 
-  <main>
-    <h2>Contenido exclusivo para docentes</h2>
-    <p>Aquí aparecerá la información y las funcionalidades para los docentes.</p>
-  </main>
+  <!-- Subir Documento -->
+  <section id="upload-documents">
+    <h2>Subir Documento</h2>
+    <form id="upload-form">
+      <label for="document">Selecciona un Documento</label>
+      <input type="file" id="document" required>
+      <button type="submit">Subir Documento</button>
+    </form>
+  </section>
 
+  <!-- Crear Publicación -->
+  <section id="create-publications">
+    <h2>Crear Publicación</h2>
+    <form id="publication-form">
+      <label for="title">Título de la Publicación</label>
+      <input type="text" id="title" required>
+
+      <label for="content">Contenido de la Publicación</label>
+      <textarea id="content" required></textarea>
+
+      <button type="submit">Publicar</button>
+    </form>
+  </section>
+
+  <!-- Crear Clase -->
+  <section id="create-classes">
+    <h2>Crear Clase</h2>
+    <form id="create-class-form">
+      <label for="class-name">Nombre de la Clase</label>
+      <input type="text" id="class-name" required>
+
+      <label for="class-description">Descripción de la Clase</label>
+      <textarea id="class-description" required></textarea>
+
+      <button type="submit">Crear Clase</button>
+    </form>
+  </section>
+
+  <!-- Agregar Alumnos a la Clase -->
+  <section id="add-students">
+    <h2>Agregar Alumnos a la Clase</h2>
+    <form id="add-students-form">
+      <label for="class-select">Seleccionar Clase</label>
+      <select id="class-select" required></select>
+
+      <label for="student-select">Seleccionar Alumno</label>
+      <select id="student-select" required></select>
+
+      <button type="submit">Agregar Alumno</button>
+    </form>
+  </section>
+
+  <!-- Enlace para salir -->
   <footer>
-    <p>&copy; 2025 Sistema de Administración para Residencias.</p>
+    <a href="logout.html">Cerrar sesión</a>
   </footer>
 
-  <script type="module">
-    import { auth } from './firebase-config.js';
-    import { signOut } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
-
-    const logoutButton = document.getElementById('logout-button');
-
-    // Función para cerrar sesión
-    logoutButton.addEventListener('click', async () => {
-      try {
-        await signOut(auth);
-        alert('Sesión cerrada exitosamente');
-        window.location.href = 'index.html';  // Redirige a la página de login
-      } catch (error) {
-        console.error('Error al cerrar sesión:', error);
-        alert('Hubo un error al cerrar sesión: ' + error.message);
-      }
-    });
-  </script>
+  <script src="script.js"></script>
 </body>
 </html>
