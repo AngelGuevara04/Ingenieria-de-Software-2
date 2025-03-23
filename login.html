@@ -1,50 +1,64 @@
+<!-- login.html -->
 <!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Login - Sistema de Administración</title>
+  <title>Login</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <header>
-    <img src="logo.jpg" alt="Logo del Proyecto">
-    <h1>Iniciar Sesión</h1>
-  </header>
-
-  <main>
-    <form id="login-form">
-      <label for="email">Correo electrónico</label>
-      <input type="email" id="email" required>
-      
-      <label for="password">Contraseña</label>
-      <input type="password" id="password" required>
-      
-      <button type="submit">Iniciar Sesión</button>
-    </form>
-  </main>
-
-  <footer>
-    <p>&copy; 2025 Sistema de Administración para Residencias.</p>
-  </footer>
+  <h1>Iniciar sesión</h1>
+  <form id="login-form">
+    <label for="email">Correo electrónico:</label>
+    <input type="email" id="email" required>
+    <label for="password">Contraseña:</label>
+    <input type="password" id="password" required>
+    <button type="submit">Iniciar sesión</button>
+  </form>
 
   <script type="module">
     import { signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
-    import { auth } from './firebase-config.js';
+    import { getDoc, doc } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
+    import { auth, db } from './firebase-config.js';
 
     const loginForm = document.getElementById('login-form');
 
     loginForm.addEventListener('submit', async (e) => {
       e.preventDefault();
+
       const email = document.getElementById('email').value;
       const password = document.getElementById('password').value;
 
       try {
+        // Iniciar sesión con correo y contraseña
         const userCredential = await signInWithEmailAndPassword(auth, email, password);
-        console.log("Usuario logueado:", userCredential.user);
-        
-        // Redirigir al dashboard intermedio
-        window.location.href = "dashboard-intermedio.html";
+        const user = userCredential.user;
+
+        // Obtener el documento del usuario desde Firestore
+        const userDocRef = doc(db, "usuarios", user.uid);
+        const userDocSnapshot = await getDoc(userDocRef);
+
+        if (userDocSnapshot.exists()) {
+          const userData = userDocSnapshot.data();
+          const tipoUsuario = userData.rol;
+
+          // Redirigir al dashboard correspondiente según el rol
+          if (tipoUsuario === "alumno") {
+            window.location.href = "dashboard-alumno.html";
+          } else if (tipoUsuario === "docente") {
+            window.location.href = "dashboard-docente.html";
+          } else if (tipoUsuario === "ejecutivo") {
+            window.location.href = "dashboard-ejecutivo.html";
+          } else {
+            console.error("Rol desconocido:", tipoUsuario);
+            alert("Rol de usuario no reconocido.");
+          }
+        } else {
+          console.error("No se encontró el documento del usuario.");
+          alert("No se encontró el documento del usuario en Firestore.");
+          window.location.href = "login.html"; // Redirigir al login si no se encuentra el documento
+        }
       } catch (error) {
         console.error("Error al iniciar sesión:", error);
         alert("Error al iniciar sesión: " + error.message);
