@@ -1,4 +1,3 @@
-<!-- registro.html -->
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -38,7 +37,7 @@
       const email = document.getElementById('email').value;
       const password = document.getElementById('password').value;
       const nombre = document.getElementById('nombre').value;
-      const rol = document.getElementById('rol').value; // Obtener el rol seleccionado (alumno, docente, ejecutivo)
+      const rol = document.getElementById('rol').value;
 
       try {
         // Crear usuario en Firebase Auth
@@ -54,7 +53,7 @@
 
         // Redirigir a la página de login o dashboard-intermedio
         alert("Registro exitoso. Ahora puedes iniciar sesión.");
-        window.location.href = "login.html"; // O redirigir a dashboard-intermedio.html según tu flujo
+        window.location.href = "login.html";
       } catch (error) {
         console.error("Error al registrar usuario:", error);
         alert("Error al registrar usuario: " + error.message);
