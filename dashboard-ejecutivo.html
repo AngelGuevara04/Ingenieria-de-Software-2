@@ -3,42 +3,35 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dashboard - Ejecutivo</title>
+  <title>Dashboard Ejecutivo</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+  <!-- Encabezado -->
   <header>
-    <img src="logo.jpg" alt="Logo del Proyecto">
-    <h1>Bienvenido al Dashboard de Ejecutivo</h1>
-    <button id="logout-button">Cerrar Sesión</button>
+    <img src="logo.png" alt="Logo de la Academia">
+    <h1>Panel Ejecutivo</h1>
   </header>
 
-  <main>
-    <h2>Contenido exclusivo para ejecutivos</h2>
-    <p>Aquí aparecerá la información y las funcionalidades para los ejecutivos.</p>
-  </main>
+  <!-- Gestión de Usuarios -->
+  <section id="manage-users">
+    <h2>Gestionar Usuarios</h2>
+    <button id="view-users">Ver Usuarios</button>
+    <button id="add-user">Agregar Usuario</button>
+  </section>
 
+  <!-- Gestión de Clases -->
+  <section id="manage-classes">
+    <h2>Gestionar Clases</h2>
+    <button id="view-classes">Ver Clases</button>
+    <button id="create-class">Crear Clase</button>
+  </section>
+
+  <!-- Enlace para salir -->
   <footer>
-    <p>&copy; 2025 Sistema de Administración para Residencias.</p>
+    <a href="logout.html">Cerrar sesión</a>
   </footer>
 
-  <script type="module">
-    import { auth } from './firebase-config.js';
-    import { signOut } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
-
-    const logoutButton = document.getElementById('logout-button');
-
-    // Función para cerrar sesión
-    logoutButton.addEventListener('click', async () => {
-      try {
-        await signOut(auth);
-        alert('Sesión cerrada exitosamente');
-        window.location.href = 'index.html';  // Redirige a la página de login
-      } catch (error) {
-        console.error('Error al cerrar sesión:', error);
-        alert('Hubo un error al cerrar sesión: ' + error.message);
-      }
-    });
-  </script>
+  <script src="script.js"></script>
 </body>
 </html>
