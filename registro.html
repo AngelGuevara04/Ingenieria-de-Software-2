@@ -1,67 +1,63 @@
+<!-- registro.html -->
 <!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Registro - Sistema de Administración</title>
+  <title>Registro</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <header>
-    <img src="logo.jpg" alt="Logo del Proyecto">
-    <h1>Registrar Usuario</h1>
-  </header>
-
-  <main>
-    <form id="signup-form">
-      <label for="email">Correo electrónico</label>
-      <input type="email" id="email" required>
-      
-      <label for="password">Contraseña</label>
-      <input type="password" id="password" required>
-      
-      <label for="user-type">Tipo de Usuario</label>
-      <select id="user-type" required>
-        <option value="alumno">Alumno</option>
-        <option value="docente">Docente</option>
-        <option value="ejecutivo">Ejecutivo/Administrador</option>
-      </select>
-      
-      <button type="submit">Registrar</button>
-    </form>
-  </main>
-
-  <footer>
-    <p>&copy; 2025 Sistema de Administración para Residencias.</p>
-  </footer>
+  <h1>Registro de usuario</h1>
+  <form id="registro-form">
+    <label for="nombre">Nombre:</label>
+    <input type="text" id="nombre" required>
+    <label for="email">Correo electrónico:</label>
+    <input type="email" id="email" required>
+    <label for="password">Contraseña:</label>
+    <input type="password" id="password" required>
+    <label for="rol">Rol:</label>
+    <select id="rol" required>
+      <option value="alumno">Alumno</option>
+      <option value="docente">Docente</option>
+      <option value="ejecutivo">Ejecutivo</option>
+    </select>
+    <button type="submit">Registrar</button>
+  </form>
 
   <script type="module">
     import { createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
     import { setDoc, doc } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
     import { auth, db } from './firebase-config.js';
 
-    const signupForm = document.getElementById('signup-form');
+    const registroForm = document.getElementById('registro-form');
 
-    signupForm.addEventListener('submit', async (e) => {
+    registroForm.addEventListener('submit', async (e) => {
       e.preventDefault();
+
       const email = document.getElementById('email').value;
       const password = document.getElementById('password').value;
-      const userType = document.getElementById('user-type').value;
+      const nombre = document.getElementById('nombre').value;
+      const rol = document.getElementById('rol').value; // Obtener el rol seleccionado (alumno, docente, ejecutivo)
 
       try {
+        // Crear usuario en Firebase Auth
         const userCredential = await createUserWithEmailAndPassword(auth, email, password);
         const user = userCredential.user;
 
-        // Guardar los datos adicionales del usuario en Firestore
+        // Crear documento de usuario en Firestore con el rol
         await setDoc(doc(db, "usuarios", user.uid), {
-          tipoUsuario: userType
+          correo: email,
+          nombre: nombre,
+          rol: rol
         });
 
-        alert("Usuario registrado correctamente.");
-        window.location.href = "login.html";
+        // Redirigir a la página de login o dashboard-intermedio
+        alert("Registro exitoso. Ahora puedes iniciar sesión.");
+        window.location.href = "login.html"; // O redirigir a dashboard-intermedio.html según tu flujo
       } catch (error) {
-        console.error("Error al registrar el usuario:", error);
-        alert("Error al registrar el usuario: " + error.message);
+        console.error("Error al registrar usuario:", error);
+        alert("Error al registrar usuario: " + error.message);
       }
     });
   </script>
