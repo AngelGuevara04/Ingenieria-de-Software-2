@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Login - Sistema de Administración para Residencias</title>
+  <title>Login - Sistema de Administración</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -11,62 +11,43 @@
     <img src="logo.jpg" alt="Logo del Proyecto">
     <h1>Iniciar Sesión</h1>
   </header>
+
   <main>
     <form id="login-form">
-      <label for="email">Correo Electrónico:</label>
+      <label for="email">Correo electrónico</label>
       <input type="email" id="email" required>
-
-      <label for="password">Contraseña:</label>
+      
+      <label for="password">Contraseña</label>
       <input type="password" id="password" required>
-
+      
       <button type="submit">Iniciar Sesión</button>
     </form>
-    <p id="error-message" style="color: red;"></p>
   </main>
+
   <footer>
     <p>&copy; 2025 Sistema de Administración para Residencias.</p>
   </footer>
 
   <script type="module">
-    import { auth, db } from './firebase-config.js';
     import { signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
-    import { doc, getDoc } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
+    import { auth } from './firebase-config.js';
 
     const loginForm = document.getElementById('login-form');
-    const errorMessage = document.getElementById('error-message');
 
     loginForm.addEventListener('submit', async (e) => {
       e.preventDefault();
-
       const email = document.getElementById('email').value;
       const password = document.getElementById('password').value;
 
       try {
-        // Autenticación con correo y contraseña
         const userCredential = await signInWithEmailAndPassword(auth, email, password);
-        const user = userCredential.user;
-
-        // Obtener el rol del usuario desde Firestore
-        const userRef = doc(db, "usuarios", user.uid);
-        const userDoc = await getDoc(userRef);
-
-        if (userDoc.exists()) {
-          const userData = userDoc.data();
-          const rol = userData.rol;
-
-          // Redirigir según el rol
-          if (rol === "alumno") {
-            window.location.href = "dashboard-alumno.html";
-          } else if (rol === "docente") {
-            window.location.href = "dashboard-docente.html";
-          } else if (rol === "ejecutivo") {
-            window.location.href = "dashboard-ejecutivo.html";
-          }
-        } else {
-          errorMessage.textContent = "No se encontró el rol del usuario en la base de datos.";
-        }
+        console.log("Usuario logueado:", userCredential.user);
+        
+        // Redirigir al dashboard intermedio
+        window.location.href = "dashboard-intermedio.html";
       } catch (error) {
-        errorMessage.textContent = "Error al iniciar sesión: " + error.message;
+        console.error("Error al iniciar sesión:", error);
+        alert("Error al iniciar sesión: " + error.message);
       }
     });
   </script>
