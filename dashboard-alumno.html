@@ -3,53 +3,22 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dashboard Alumno - Sistema de Administración para Residencias</title>
+  <title>Dashboard - Alumno</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <header>
     <img src="logo.jpg" alt="Logo del Proyecto">
-    <h1>Bienvenido Alumno</h1>
-    <nav>
-      <a href="index.html">Inicio</a>
-      <a href="dashboard.html">Dashboard</a>
-      <a href="#" id="logout-btn">Cerrar Sesión</a>
-    </nav>
+    <h1>Bienvenido al Dashboard de Alumno</h1>
   </header>
+
   <main>
-    <section>
-      <h2>Bienvenido, <span id="user-name">Alumno</span></h2>
-      <p>Accede a tus materiales, tareas y actividades.</p>
-    </section>
+    <h2>Contenido exclusivo para alumnos</h2>
+    <p>Aquí aparecerá la información y las funcionalidades para los alumnos.</p>
   </main>
+
   <footer>
     <p>&copy; 2025 Sistema de Administración para Residencias.</p>
   </footer>
-
-  <script type="module">
-    import { auth } from './firebase-config.js';
-    import { signOut } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
-
-    const userNameSpan = document.getElementById('user-name');
-    const logoutBtn = document.getElementById('logout-btn');
-
-    if (auth.currentUser) {
-      userNameSpan.textContent = auth.currentUser.displayName || "Alumno";
-    } else {
-      window.location.href = "login.html";
-    }
-
-    logoutBtn.addEventListener('click', async (e) => {
-      e.preventDefault();
-      try {
-        await signOut(auth);
-        alert("Sesión cerrada correctamente.");
-        window.location.href = "login.html";
-      } catch (error) {
-        console.error("Error al cerrar sesión:", error);
-        alert("Error al cerrar sesión: " + error.message);
-      }
-    });
-  </script>
 </body>
 </html>
