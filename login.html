@@ -17,52 +17,44 @@
   </form>
 
   <script type="module">
-    import { signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
-    import { getDoc, doc } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
-    import { auth, db } from './firebase-config.js';
+  import { signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
+  import { getDoc, doc } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
+  import { auth, db } from './firebase-config.js';
 
-    const loginForm = document.getElementById('login-form');
+  const loginForm = document.getElementById('login-form');
 
-    loginForm.addEventListener('submit', async (e) => {
-      e.preventDefault();
+  loginForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
 
-      const email = document.getElementById('email').value;
-      const password = document.getElementById('password').value;
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
 
-      try {
-        // Iniciar sesión con correo y contraseña
-        const userCredential = await signInWithEmailAndPassword(auth, email, password);
-        const user = userCredential.user;
+    try {
+      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      const user = userCredential.user;
 
-        // Obtener el documento del usuario desde Firestore
-        const userDocRef = doc(db, "usuarios", user.uid);
-        const userDocSnapshot = await getDoc(userDocRef);
+      const userDocRef = doc(db, "usuarios", user.uid);
+      const userDocSnapshot = await getDoc(userDocRef);
 
-        if (userDocSnapshot.exists()) {
-          const userData = userDocSnapshot.data();
-          const tipoUsuario = userData.rol;
-
-          // Redirigir al dashboard correspondiente según el rol
-          if (tipoUsuario === "alumno") {
-            window.location.href = "dashboard-alumno.html";
-          } else if (tipoUsuario === "docente") {
-            window.location.href = "dashboard-docente.html";
-          } else if (tipoUsuario === "ejecutivo") {
-            window.location.href = "dashboard-ejecutivo.html";
-          } else {
-            console.error("Rol desconocido:", tipoUsuario);
-            alert("Rol de usuario no reconocido.");
-          }
+      if (userDocSnapshot.exists()) {
+        const tipoUsuario = userDocSnapshot.data().rol;
+        if (tipoUsuario === "alumno") {
+          window.location.href = "dashboard-alumno.html";
+        } else if (tipoUsuario === "docente") {
+          window.location.href = "dashboard-docente.html";
+        } else if (tipoUsuario === "ejecutivo") {
+          window.location.href = "dashboard-ejecutivo.html";
         } else {
-          console.error("No se encontró el documento del usuario.");
-          alert("No se encontró el documento del usuario en Firestore.");
-          window.location.href = "login.html"; // Redirigir al login si no se encuentra el documento
+          alert("Rol no reconocido.");
         }
-      } catch (error) {
-        console.error("Error al iniciar sesión:", error);
-        alert("Error al iniciar sesión: " + error.message);
+      } else {
+        alert("Usuario no registrado correctamente.");
       }
-    });
-  </script>
+    } catch (error) {
+      console.error("Error al iniciar sesión:", error);
+      alert("Error: " + error.message);
+    }
+  });
+</script>
 </body>
 </html>
