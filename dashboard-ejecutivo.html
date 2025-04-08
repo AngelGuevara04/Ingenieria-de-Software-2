@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Panel Ejecutivo</title>
+  <title>Residencias - Ejecutivo</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -13,41 +13,33 @@
     <button id="logout-button">Cerrar Sesión</button>
   </header>
 
-  <!-- Gestión de Usuarios -->
-  <section id="manage-users">
-    <h2>Gestionar Usuarios</h2>
-    <button id="view-users">Ver Usuarios</button>
-    <button id="add-user">Agregar Usuario</button>
-  </section>
+  <main>
+    <section>
+      <h2>Validar Documentación</h2>
+      <div id="lista-documentos">Cargando...</div>
+    </section>
 
-  <!-- Gestión de Clases -->
-  <section id="manage-classes">
-    <h2>Gestionar Clases</h2>
-    <button id="view-classes">Ver Clases</button>
-    <button id="create-class">Crear Clase</button>
-  </section>
+    <section>
+      <h2>Asignar Asesores</h2>
+      <form id="form-asignar-asesor">
+        <label for="alumno">Alumno:</label>
+        <select id="alumno"></select>
+        <label for="docente">Docente:</label>
+        <select id="docente"></select>
+        <button type="submit">Asignar</button>
+      </form>
+    </section>
+
+    <section>
+      <h2>Proyectos en Curso</h2>
+      <div id="proyectos-curso">Cargando proyectos...</div>
+    </section>
+  </main>
 
   <footer>
-    <p>&copy; 2025 Sistema de Administración para Residencias.</p>
+    <p>&copy; 2025 Sistema de Residencias ITSM.</p>
   </footer>
 
-  <script type="module">
-    import { auth } from './firebase-config.js';
-    import { signOut } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
-
-    const logoutButton = document.getElementById('logout-button');
-
-    // Función para cerrar sesión
-    logoutButton.addEventListener('click', async () => {
-      try {
-        await signOut(auth);
-        alert('Sesión cerrada exitosamente');
-        window.location.href = 'index.html';  // Redirige a la página de login
-      } catch (error) {
-        console.error('Error al cerrar sesión:', error);
-        alert('Hubo un error al cerrar sesión: ' + error.message);
-      }
-    });
-  </script>
+  <script type="module" src="script.js"></script>
 </body>
 </html>
