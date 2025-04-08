@@ -55,20 +55,17 @@
   <script type="module">
     import { auth } from './firebase-config.js';
     import { signOut } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
-
     const logoutButton = document.getElementById('logout-button');
-
     logoutButton.addEventListener('click', async () => {
       try {
         await signOut(auth);
         alert('Sesión cerrada exitosamente');
         window.location.href = 'index.html';
       } catch (error) {
-        console.error('Error al cerrar sesión:', error);
-        alert('Hubo un error al cerrar sesión: ' + error.message);
+        alert('Error al cerrar sesión: ' + error.message);
       }
     });
   </script>
-  <script type="module" src="script.js"></script>
+  <script type="module" src="script-alumno.js"></script>
 </body>
 </html>
