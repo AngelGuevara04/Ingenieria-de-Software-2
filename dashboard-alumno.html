@@ -3,42 +3,46 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tablón - Alumno</title>
+  <title>Residencias - Alumno</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <header>
     <img src="logo.jpg" alt="Logo del Proyecto">
-    <h1>Bienvenido al tablón de alumno</h1>
+    <h1>Panel de Residencias - Alumno</h1>
     <button id="logout-button">Cerrar Sesión</button>
   </header>
 
   <main>
-    <h2>Contenido exclusivo para alumnos</h2>
-    <p>Aquí aparecerá la información y las funcionalidades para los alumnos</p>
+    <section>
+      <h2>Subir Anteproyecto</h2>
+      <form id="form-anteproyecto">
+        <label for="archivo">Archivo (PDF):</label>
+        <input type="file" id="archivo" accept="application/pdf" required>
+        <button type="submit">Enviar</button>
+      </form>
+    </section>
+
+    <section>
+      <h2>Estado del Proyecto</h2>
+      <div id="estado-proyecto">Cargando estado...</div>
+    </section>
+
+    <section>
+      <h2>Reportes Parciales</h2>
+      <form id="form-reporte">
+        <label for="reporte">Archivo (PDF):</label>
+        <input type="file" id="reporte" accept="application/pdf" required>
+        <button type="submit">Subir Reporte</button>
+      </form>
+      <div id="lista-reportes"></div>
+    </section>
   </main>
 
   <footer>
-    <p>&copy; 2025 Sistema de Administración para Residencias.</p>
+    <p>&copy; 2025 Sistema de Residencias ITSM.</p>
   </footer>
 
-  <script type="module">
-    import { auth } from './firebase-config.js';
-    import { signOut } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
-
-    const logoutButton = document.getElementById('logout-button');
-
-    // Función para cerrar sesión
-    logoutButton.addEventListener('click', async () => {
-      try {
-        await signOut(auth);
-        alert('Sesión cerrada exitosamente');
-        window.location.href = 'index.html';  // Redirige a la página de login
-      } catch (error) {
-        console.error('Error al cerrar sesión:', error);
-        alert('Hubo un error al cerrar sesión: ' + error.message);
-      }
-    });
-  </script>
+  <script type="module" src="script.js"></script>
 </body>
 </html>
